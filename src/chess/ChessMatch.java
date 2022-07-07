@@ -35,6 +35,10 @@ public class ChessMatch {
 		return currentPlayer;
 	}
 	
+	public boolean getCheck() {
+		return check;
+	}
+	
 	public ChessPiece[][] getPieces() {
 		ChessPiece[][] mat= new ChessPiece[board.getRows()][board.getColums()];
 		for (int i=0; i<board.getRows();i++) {
@@ -57,6 +61,14 @@ public class ChessMatch {
 		validateSourcePosition(source);
 		vaidateTargetPosition(source,target);
 		Piece capturedPiece = makeMove(source,target);
+		
+		if (testCheck(currentPlayer)) {
+			undoMove(source, target, capturedPiece);
+			throw new ChessException("You cant put yourself in check");
+		}
+		
+		check = (testCheck(opponent(currentPlayer))) ? true : false;
+		
 		nextTurn();
 		return (ChessPiece)capturedPiece;
 	}
