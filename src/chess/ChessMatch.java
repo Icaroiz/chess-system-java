@@ -1,6 +1,5 @@
 package chess;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -83,8 +82,6 @@ public class ChessMatch {
 		vaidateTargetPosition(source,target);
 		Piece capturedPiece = makeMove(source,target);
 		
-		
-		
 		if (testCheck(currentPlayer)) {
 			undoMove(source, target, capturedPiece);
 			throw new ChessException("You cant put yourself in check");
@@ -100,11 +97,6 @@ public class ChessMatch {
 				promoted = replacePromotedPiece("Q");
 			}
 		}
-		
-		
-		
-		
-		
 		
 		check = (testCheck(opponent(currentPlayer))) ? true : false;
 		
@@ -130,7 +122,7 @@ public class ChessMatch {
 			throw new IllegalStateException("There is no piece to the promoted");
 		}
 		if(!type.equals("B") && !type.equals("N") && !type.equals("R") & !type.equals("Q")) {
-			throw new InvalidParameterException("Invalid type");
+			return promoted;
 		}
 		
 		Position pos = promoted.getChessPosition().toPosition();
